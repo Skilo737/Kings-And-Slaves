@@ -2,6 +2,7 @@
 
 # Cards Module
 # Basic classes for a game with playing cards
+from livewires import games 
 
 class Card(object):
    """A playing card. """
@@ -12,7 +13,7 @@ class Card(object):
       self.rank = rank
       self.is_face_up = face_up
       if self.suit == "s":
-         if self.rank == "A"
+         if self.rank == "A":
             image = games.load_image("as-pixilart.png")
             return image
          if self.rank == "2":
@@ -51,7 +52,7 @@ class Card(object):
          if self.rank == "K":
             image = games.load_image("Ks-pixilart.png")
             return image 
-       if self.suit == "c":
+      if self.suit == "c":
          if self.rank == "A":
             image = games.load_image("ac-pixilart.png")
             return image
@@ -91,7 +92,7 @@ class Card(object):
          if self.rank == "K":
             image = games.load_image("kc-pixilart.png")
             return image
-       if self.suit == "d":
+      if self.suit == "d":
          if self.rank == "A":
             image = games.load_image("ad-pixilart.png")
             return image
@@ -131,7 +132,7 @@ class Card(object):
          if self.rank == "K":
             image = games.load_image("kd-pixilart.png")
             return image
-       if self.suit == "h":
+      if self.suit == "h":
          if self.rank == "A":
             image = games.load_image("ah-pixilart.png")
             return image
@@ -147,7 +148,7 @@ class Card(object):
          if self.rank == "5":
             image = games.load_image("5h-pixilart.png")
             return image 
-         if self.rank == "6"
+         if self.rank == "6":
             image = games.load_image("6h-pixilart.png")
             return image
          if self.rank == "7":
