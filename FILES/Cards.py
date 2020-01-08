@@ -2,7 +2,7 @@
 
 # Cards Module
 # Basic classes for a game with playing cards
-from superwires import games 
+from livewires import games 
 
 class Card(object):
    """A playing card. """
@@ -15,163 +15,111 @@ class Card(object):
       if self.suit == "s":
          if self.rank == "A":
             image = games.load_image("as-pixilart.png")
-            return image
-         if self.rank == "2":
+         elif self.rank == "2":
             image = games.load_image("2s-pixilart.png")
-            return image
-         if self.rank == "3":
+         elif self.rank == "3":
             image = games.load_image("3s-pixilart.png")
-            return image
-         if self.rank == "4":
+         elif self.rank == "4":
             image = games.load_image("4s-pixilart.png")
-            return image
-         if self.rank == "5":
-            image = games.load_image("5s-pixilart.png")
-            return image 
-         if self.rank == "6":
+         elif self.rank == "5":
+            image = games.load_image("5s-pixilart.png") 
+         elif self.rank == "6":
             image = games.load_image("6s-pixilart.png")
-            return image
-         if self.rank == "7":
+         elif self.rank == "7":
             image = games.load_image("7s-pixilart.png")
-            return image
-         if self.rank == "8":
-            image = games.load_image("8s-pixilart.png")
-            return image 
-         if self.rank == "9":
+         elif self.rank == "8":
+            image = games.load_image("8s-pixilart.png") 
+         elif self.rank == "9":
             image = games.load_image("9s-pixilart.png")
-            return image
-         if self.rank == "10":
-            image = games.load_image("10s-pixilart.png")
-            return image 
-         if self.rank == "J":
-            image = games.load_image("js-pixilart.png")
-            return image          
-         if self.rank == "Q":
-            image = games.load_image("qs-pixilart.png")
-            return image 
-         if self.rank == "K":
-            image = games.load_image("Ks-pixilart.png")
-            return image 
-      if self.suit == "c":
+         elif self.rank == "10":
+            image = games.load_image("10s-pixilart.png") 
+         elif self.rank == "J":
+            image = games.load_image("js-pixilart.png")          
+         elif self.rank == "Q":
+            image = games.load_image("qs-pixilart.png") 
+         elif self.rank == "K":
+            image = games.load_image("Ks-pixilart.png") 
+      elif self.suit == "c":
          if self.rank == "A":
             image = games.load_image("ac-pixilart.png")
-            return image
-         if self.rank == "2":
+         elif self.rank == "2":
             image = games.load_image("2c-pixilart.png")
-            return image
-         if self.rank == "3":
+         elif self.rank == "3":
             image = games.load_image("3c-pixilart.png")
-            return image
-         if self.rank == "4":
+         elif self.rank == "4":
             image = games.load_image("4c-pixilart.png")
-            return image
-         if self.rank == "5":
+         elif self.rank == "5":
             image = games.load_image("5c-pixilart.png")
-            return image 
-         if self.rank == "6":
+         elif self.rank == "6":
             image = games.load_image("6c-pixilart.png")
-            return image
-         if self.rank == "7":
+         elif self.rank == "7":
             image = games.load_image("7c-pixilart.png")
-            return image
-         if self.rank == "8":
+         elif self.rank == "8":
             image = games.load_image("8c-pixilart.png")
-            return image 
-         if self.rank == "9":
+         elif self.rank == "9":
             image = games.load_image("9c-pixilart.png")
-            return image
-         if self.rank == "10":
+         elif self.rank == "10":
             image = games.load_image("10c-pixilart.png")
-            return image 
-         if self.rank == "J":
-            image = games.load_image("jc-pixilart.png")
-            return image          
-         if self.rank == "Q":
+         elif self.rank == "10":
+            image = games.load_image("jc-pixilart.png")      
+         elif self.rank == "Q":
             image = games.load_image("qc-pixilart.png")
-            return image 
-         if self.rank == "K":
+         elif self.rank == "K":
             image = games.load_image("kc-pixilart.png")
-            return image
-      if self.suit == "d":
+      elif self.suit == "d":
          if self.rank == "A":
             image = games.load_image("ad-pixilart.png")
-            return image
-         if self.rank == "2":
+         elif self.rank == "2":
             image = games.load_image("2d-pixilart.png")
-            return image
-         if self.rank == "3":
+         elif self.rank == "3":
             image = games.load_image("3d-pixilart.png")
-            return image
-         if self.rank == "4":
+         elif self.rank == "4":
             image = games.load_image("4d-pixilart.png")
-            return image
-         if self.rank == "5":
+         elif self.rank == "5":
             image = games.load_image("5d-pixilart.png")
-            return image 
-         if self.rank == "6":
+         elif self.rank == "6":
             image = games.load_image("6d-pixilart.png")
-            return image
-         if self.rank == "7":
+         elif self.rank == "7":
             image = games.load_image("7d-pixilart.png")
-            return image
-         if self.rank == "8":
+         elif self.rank == "8":
             image = games.load_image("8d-pixilart.png")
-            return image 
-         if self.rank == "9":
+         elif self.rank == "9":
             image = games.load_image("9d-pixilart.png")
-            return image
-         if self.rank == "10":
-            image = games.load_image("10d-pixilart.png")
-            return image 
-         if self.rank == "J":
-            image = games.load_image("jd-pixilart.png")
-            return image          
-         if self.rank == "Q":
-            image = games.load_image("qd-pixilart.png")
-            return image 
-         if self.rank == "K":
+         elif self.rank == "10":
+            image = games.load_image("10d-pixilart.png") 
+         elif self.rank == "J":
+            image = games.load_image("jd-pixilart.png")          
+         elif self.rank == "Q":
+            image = games.load_image("qd-pixilart.png") 
+         elif self.rank == "K":
             image = games.load_image("kd-pixilart.png")
-            return image
-      if self.suit == "h":
+      elif self.suit == "h":
          if self.rank == "A":
             image = games.load_image("ah-pixilart.png")
-            return image
-         if self.rank == "2":
+         elif self.rank == "2":
             image = games.load_image("2h-pixilart.png")
-            return image
-         if self.rank == "3":
+         elif self.rank == "3":
             image = games.load_image("3h-pixilart.png")
-            return image
-         if self.rank == "4":
+         elif self.rank == "4":
             image = games.load_image("4h-pixilart.png")
-            return image
-         if self.rank == "5":
-            image = games.load_image("5h-pixilart.png")
-            return image 
-         if self.rank == "6":
+         elif self.rank == "5":
+            image = games.load_image("5h-pixilart.png") 
+         elif self.rank == "6":
             image = games.load_image("6h-pixilart.png")
-            return image
-         if self.rank == "7":
+         elif self.rank == "7":
             image = games.load_image("7h-pixilart.png")
-            return image
-         if self.rank == "8":
-            image = games.load_image("8h-pixilart.png")
-            return image 
-         if self.rank == "9":
+         elif self.rank == "8":
+            image = games.load_image("8h-pixilart.png") 
+         elif self.rank == "9":
             image = games.load_image("9h-pixilart.png")
-            return image
-         if self.rank == "10":
-            image = games.load_image("10h-pixilart.png")
-            return image 
-         if self.rank == "J":
-            image = games.load_image("jh-pixilart.png")
-            return image          
-         if self.rank == "Q":
-            image = games.load_image("qh-pixilart.png")
-            return image 
-         if self.rank == "K":
-            image = games.load_image("kh-pixilart.png")
-            return image  
+         elif self.rank == "10":
+            image = games.load_image("10h-pixilart.png") 
+         elif self.rank == "J":
+            image = games.load_image("jh-pixilart.png")          
+         elif self.rank == "Q":
+            image = games.load_image("qh-pixilart.png") 
+         elif self.rank == "K":
+            image = games.load_image("kh-pixilart.png")  
    def __str__(self):
       if self.is_face_up:
          rep = self.rank + self.suit
@@ -235,4 +183,4 @@ class Deck(Hand):
 
 if __name__ == "__main__":
    print("This is a module with classes for playing cards.")
-   input("\n\nPress the enter key to exit")                                                  
+   input("\n\nPress the enter key to exit")                               
