@@ -1,4 +1,4 @@
-#from livewires import games
+from superwires import games
 import Cards
 
 
@@ -18,9 +18,9 @@ for hand in hand_list:
    print ()
 
 
-#def main():
-   #games.init(screen_width = 640, screen_height = 480, fps = 60)
-   #wall_image = games.load_image("(background)", transparent = False)
-   #games.screen.background = wall_image
+def main():
+   games.init(screen_width = 640, screen_height = 480, fps = 60)
+   wall_image = games.load_image("(background)", transparent = False)
+   games.screen.background = wall_image
 
-#main()
+main()

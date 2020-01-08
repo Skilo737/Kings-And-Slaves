@@ -2,7 +2,7 @@
 
 # Cards Module
 # Basic classes for a game with playing cards
-from livewires import games 
+from superwires import games 
 
 class Card(object):
    """A playing card. """
@@ -14,7 +14,7 @@ class Card(object):
       self.is_face_up = face_up
       if self.suit == "s":
          if self.rank == "A":
-            image = games.load_image("as-pixilart.png")
+            image = games.load_image("Spades\as-pixilart.png")
             return image
          if self.rank == "2":
             image = games.load_image("2s-pixilart.png")
