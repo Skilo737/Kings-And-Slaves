@@ -1,4 +1,4 @@
-
+import pygame
 from superwires import games
 
 games.init(screen_width = 1000, screen_height = 700, fps = 60)
