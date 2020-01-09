@@ -1,7 +1,7 @@
 import pygame
 from livewires import games
 
-class Card(games.Sprite):
+class CardImage(games.Sprite):
    """A playing card. """
    SUITS = ["s", "c", "d", "h"]
    RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]   
@@ -118,6 +118,22 @@ class Card(games.Sprite):
          elif self.rank == "K":
             self.image = games.load_image("kh-pixilart.png")
       super(Card, self).__init__(image = self.image, x = games.screen.width//2, y = games.screen.height//2)
+   def flip(self):
+      if self.is_face_up:
+         super(Card, self).__init__(image = games.load_image("card-backside.png"), x = games.screen.width//2, y = games.screen.height//2)
+      else:
+         super(Card, self).__init__(image = self.image, x = games.screen.width//2, y = games.screen.height//2)
+      self.is_face_up = not self.is_face_up
+                  
+   
+class Card(object):
+   """A playing card. """
+   SUITS = ["s", "c", "d", "h"]
+   RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]   
+   def __init__(self, rank, suit, face_up = True):
+      self.suit = suit
+      self.rank = rank
+      self.is_face_up = face_up
    def __str__(self):
       if self.is_face_up:
          rep = self.rank + self.suit
@@ -126,9 +142,7 @@ class Card(games.Sprite):
       return rep
       
    def flip(self):
-      self.is_face_up = not self.is_face_up            
-   
-   
+      self.is_face_up = not self.is_face_up    
    
    
 class Hand(object):
@@ -204,7 +218,8 @@ def main():
    setup()
     
    card = Card("A", "c")
-   games.screen.add(card)
+   cardsprite = CardImage("A", "c")
+   games.screen.add(cardsprite)
    
  
    
