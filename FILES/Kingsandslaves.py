@@ -26,6 +26,17 @@ class Card(games.Sprite):
       self.is_face_up = not self.is_face_up
 
 
+   def update(self):
+      """ Move to mouse x position """
+      while games.mouse.is_pressed(0) == False:
+         self.x = games.mouse.x
+         self.y = games.mouse.y
+
+         
+         if self.left < 0:
+            self.left = 0
+         if self.right > games.screen.width:
+            self.right = games.screen.width
 
                   
    
@@ -219,11 +230,11 @@ def main():
 
    ###### Im Testing stuff DO NOT USE IN FINISHED GAME########### 
    cardimage = get_card_image("6", "s")
-   back = games.load_image("card-backside.png", transparent= False)                       
+   #back = games.load_image("card-backside.png", transparent= False)                       
    cardsprite = Card("A", "s", cardimage, 600, 250, False)                        
    games.screen.add(cardsprite)                  
    ##############################################################
-   games.screen.event_grab = True
+   #games.screen.event_grab = True
    games.screen.mainloop()
 
 
