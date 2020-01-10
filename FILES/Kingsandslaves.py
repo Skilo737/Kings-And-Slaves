@@ -1,5 +1,5 @@
 import pygame
-from superwires import games
+from livewires import games
 
 games.init(screen_width = 1000, screen_height = 700, fps = 60)
 
@@ -24,23 +24,41 @@ class Card(games.Sprite):
          print("Flipping to Front")
          super(Card, self).__init__(image = self.image, x = games.screen.width//2, y = games.screen.height//2)
       self.is_face_up = not self.is_face_up
+   def check(self):
+      return False
 
 
    def update(self):
       """ Move to mouse x position """
-      while games.mouse.is_pressed(0) == False:
-         self.x = games.mouse.x
-         self.y = games.mouse.y
-
-         
+      for Pointer in self.overlapping_sprites:
+         if Pointer.check():
+            if games.mouse.is_pressed(0):
+               self.x = games.mouse.x
+               self.y = games.mouse.y            
+        
          if self.left < 0:
             self.left = 0
          if self.right > games.screen.width:
             self.right = games.screen.width
 
                   
+class Pointer(games.Sprite):
+   """An Overwrite of the mouse"""
+   image = games.load_image("3s-pixilart.png")
+   def __init__(self, image, x = 0, y = 0):
+      super(Pointer, self).__init__(image = image, x = x, y = y)
+   def update(self):
+      self.x = games.mouse.x
+      self.y = games.mouse.y
+      
+      if self.left < 0:
+            self.left = 0
+      if self.right > games.screen.width:
+            self.right = games.screen.width
+   def check(self):
+      return True
    
-   
+
 class Hand(object):
    """ A hand of playing cards. """
    def __init__(self):
@@ -226,15 +244,18 @@ def main():
    games.screen.background = wall_image
    
    setup()
+   
+   mouse = Pointer(image = games.load_image("3s-pixilart.png"), x = games.mouse.x, y = games.mouse.y)
+   games.screen.add(mouse)
     
 
    ###### Im Testing stuff DO NOT USE IN FINISHED GAME########### 
-   cardimage = get_card_image("6", "s")
-   #back = games.load_image("card-backside.png", transparent= False)                       
-   cardsprite = Card("A", "s", cardimage, 600, 250, False)                        
+   cardimage = get_card_image("K", "d")                       
+   cardsprite = Card("K", "d", cardimage, 600, 250, False)                        
    games.screen.add(cardsprite)                  
    ##############################################################
-   #games.screen.event_grab = True
+   games.screen.event_grab = True
+   games.mouse.is_visible = False
    games.screen.mainloop()
 
 
