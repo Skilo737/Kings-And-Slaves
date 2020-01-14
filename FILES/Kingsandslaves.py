@@ -1,5 +1,5 @@
 import pygame
-from livewires import games
+from superwires import games
 
 games.init(screen_width = 1000, screen_height = 700, fps = 60)
 
@@ -35,7 +35,7 @@ class Card(games.Sprite):
             if games.mouse.is_pressed(0):
                self.x = games.mouse.x
                self.y = games.mouse.y            
-        
+                                      
          if self.left < 0:
             self.left = 0
          if self.right > games.screen.width:
@@ -245,14 +245,16 @@ def main():
    
    setup()
    
-   mouse = Pointer(image = games.load_image("3s-pixilart.png"), x = games.mouse.x, y = games.mouse.y)
+   mouse = Pointer(image = games.load_image("qs-pixilart.png"), x = games.mouse.x, y = games.mouse.y)
    games.screen.add(mouse)
     
 
    ###### Im Testing stuff DO NOT USE IN FINISHED GAME########### 
-   cardimage = get_card_image("K", "d")                       
-   cardsprite = Card("K", "d", cardimage, 600, 250, False)                        
-   games.screen.add(cardsprite)                  
+   cardimage = get_card_image("4", "d")                       
+   cardsprite = Card("4", "d", cardimage, 600, 250, False)                        
+   games.screen.add(cardsprite)
+   cardcard = Card("4", "d", cardimage, 700, 250, False)
+   games.screen.add(cardcard)                  
    ##############################################################
    games.screen.event_grab = True
    games.mouse.is_visible = False
