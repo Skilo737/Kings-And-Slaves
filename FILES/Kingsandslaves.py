@@ -1,12 +1,13 @@
 import pygame
-from superwires import games
+from livewires import games
 
 games.init(screen_width = 1000, screen_height = 700, fps = 60)
 
 class Card(games.Sprite):
    """A playing card, visually represented on the screen """
    SUITS = ["s", "c", "d", "h"]
-   RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]   
+   RANKS = [14, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] 
+   held = 0  
    def __init__(self, rank, suit, image, x, y, face_up = True):
       super(Card, self).__init__(image = image, x = x, y = y)
       self.suit = suit
@@ -26,15 +27,32 @@ class Card(games.Sprite):
       self.is_face_up = not self.is_face_up
    def check(self):
       return False
+   def check_card(self):
+      return True
 
 
    def update(self):
       """ Move to mouse x position """
-      for Pointer in self.overlapping_sprites:
-         if Pointer.check():
+      if Pointer.hold == 1 and self.held == 1:
+         self.x = games.mouse.x
+         self.y = games.mouse.y
+      for sprite in self.overlapping_sprites:
+         if sprite.check():
+            if games.mouse.is_pressed(0) == False and self.held == 1:
+               self.held = 0
+               Pointer.change_hold(0) 
             if games.mouse.is_pressed(0):
-               self.x = games.mouse.x
-               self.y = games.mouse.y            
+               if Pointer.hold == 1 and self.held == 1:
+                  self.x = games.mouse.x
+                  self.y = games.mouse.y    
+               elif Pointer.hold == 0 and self.held == 0:
+                  self.held = 1
+                  Pointer.change_hold(1)
+                  
+                  self.x = games.mouse.x
+                  self.y = games.mouse.y
+               
+               
                                       
          if self.left < 0:
             self.left = 0
@@ -45,6 +63,7 @@ class Card(games.Sprite):
 class Pointer(games.Sprite):
    """An Overwrite of the mouse"""
    image = games.load_image("3s-pixilart.png")
+   hold = 0
    def __init__(self, image, x = 0, y = 0):
       super(Pointer, self).__init__(image = image, x = x, y = y)
    def update(self):
@@ -57,6 +76,10 @@ class Pointer(games.Sprite):
             self.right = games.screen.width
    def check(self):
       return True
+   def check_card(self):
+      return False
+   def change_hold(inpt):
+      Pointer.hold = inpt
    
 
 class Hand(object):
@@ -78,6 +101,7 @@ class Hand(object):
       
    def add(self, card):
       self.cards.append(card)
+     
    def give(self, card, dest):
       self.cards.remove(card)
       dest.add(card)
@@ -88,9 +112,11 @@ class Hand(object):
 class Deck(Hand):
    """ A deck of playing cards. """
    def populate(self):
+      count = 0
       for suit in Card.SUITS:
          for rank in Card.RANKS:
-            self.add(Card(rank, suit, get_card_image(rank, suit), 500, 350, True))
+            count += 1
+            self.add(Card(rank, suit, get_card_image(rank, suit), 500 + count, 350 + count, True))
             
    def shuffle(self):
       import random
@@ -121,7 +147,7 @@ def setup():
    for player in range(no_players):
       hand_list.append(Hand())
    my_deck.deal(hand_list, no_cards)
-   
+   return hand_list
    # for hand in hand_list:
    #    print (hand)
    #    print ()
@@ -129,135 +155,161 @@ def setup():
 def get_card_image(rank, suit):
    print("Getting Image for", rank, suit)
    if suit == "s":
-      if rank == "A":
+      if rank == 14:
          image = games.load_image("as-pixilart.png", transparent = False)
-      elif rank == "2":
+      elif rank == 2:
          image = games.load_image("2s-pixilart.png", transparent = False)
-      elif rank == "3":
+      elif rank == 3:
          image = games.load_image("3s-pixilart.png", transparent = False)
-      elif rank == "4":
+      elif rank == 4:
          image = games.load_image("4s-pixilart.png", transparent = False)
-      elif rank == "5":
+      elif rank == 5:
          image = games.load_image("5s-pixilart.png", transparent = False) 
-      elif rank == "6":
+      elif rank == 6:
          image = games.load_image("6s-pixilart.png", transparent = False)
-      elif rank == "7":
+      elif rank == 7:
          image = games.load_image("7s-pixilart.png", transparent = False)
-      elif rank == "8":
+      elif rank == 8:
          image = games.load_image("8s-pixilart.png", transparent = False) 
-      elif rank == "9":
+      elif rank == 9:
          image = games.load_image("9s-pixilart.png", transparent = False)
-      elif rank == "10":
+      elif rank == 10:
          image = games.load_image("10s-pixilart.png", transparent = False) 
-      elif rank == "J":
+      elif rank == 11:
          image = games.load_image("js-pixilart.png", transparent = False)          
-      elif rank == "Q":
+      elif rank == 12:
          image = games.load_image("qs-pixilart.png", transparent = False) 
-      elif rank == "K":
+      elif rank == 13:
          image = games.load_image("Ks-pixilart.png", transparent = False) 
    elif suit == "c":
-      if rank == "A":
+      if rank == 14:
          image = games.load_image("ac-pixilart.png", transparent = False)
-      elif rank == "2":
+      elif rank == 2:
          image = games.load_image("2c-pixilart.png", transparent = False)
-      elif rank == "3":
+      elif rank == 3:
          image = games.load_image("3c-pixilart.png", transparent = False)
-      elif rank == "4":
+      elif rank == 4:
          image = games.load_image("4c-pixilart.png", transparent = False)
-      elif rank == "5":
+      elif rank == 5:
          image = games.load_image("5c-pixilart.png", transparent = False)
-      elif rank == "6":
+      elif rank == 6:
          image = games.load_image("6c-pixilart.png", transparent = False)
-      elif rank == "7":
+      elif rank == 7:
          image = games.load_image("7c-pixilart.png", transparent = False)
-      elif rank == "8":
+      elif rank == 8:
          image = games.load_image("8c-pixilart.png", transparent = False)
-      elif rank == "9":
+      elif rank == 9:
          image = games.load_image("9c-pixilart.png", transparent = False)
-      elif rank == "10":
+      elif rank == 10:
          image = games.load_image("10c-pixilart.png", transparent = False)
-      elif rank == "J":
+      elif rank == 11:
          image = games.load_image("jc-pixilart.png", transparent = False)      
-      elif rank == "Q":
+      elif rank == 12:
          image = games.load_image("qc-pixilart.png", transparent = False)
-      elif rank == "K":
+      elif rank == 13:
          image = games.load_image("kc-pixilart.png", transparent = False)
    elif suit == "d":
-      if rank == "A":
+      if rank == 14:
          image = games.load_image("ad-pixilart.png", transparent = False)
-      elif rank == "2":
+      elif rank == 2:
          image = games.load_image("2d-pixilart.png", transparent = False)
-      elif rank == "3":
+      elif rank == 3:
          image = games.load_image("3d-pixilart.png", transparent = False)
-      elif rank == "4":
+      elif rank == 4:
          image = games.load_image("4d-pixilart.png", transparent = False)
-      elif rank == "5":
+      elif rank == 5:
          image = games.load_image("5d-pixilart.png", transparent = False)
-      elif rank == "6":
+      elif rank == 6:
          image = games.load_image("6d-pixilart.png", transparent = False)
-      elif rank == "7":
+      elif rank == 7:
          image = games.load_image("7d-pixilart.png", transparent = False)
-      elif rank == "8":
+      elif rank == 8:
          image = games.load_image("8d-pixilart.png", transparent = False)
-      elif rank == "9":
+      elif rank == 9:
          image = games.load_image("9d-pixilart.png", transparent = False)
-      elif rank == "10":
+      elif rank == 10:
          image = games.load_image("10d-pixilart.png", transparent = False) 
-      elif rank == "J":
+      elif rank == 11:
          image = games.load_image("jd-pixilart.png", transparent = False)          
-      elif rank == "Q":
+      elif rank == 12:
          image = games.load_image("qd-pixilart.png", transparent = False) 
-      elif rank == "K":
+      elif rank == 13:
          image = games.load_image("kd-pixilart.png", transparent = False)
    elif suit == "h":
-      if rank == "A":
+      if rank == 14:
          image = games.load_image("ah-pixilart.png", transparent = False)
-      elif rank == "2":
+      elif rank == 2:
          image = games.load_image("2h-pixilart.png", transparent = False)
-      elif rank == "3":
+      elif rank == 3:
          image = games.load_image("3h-pixilart.png", transparent = False)
-      elif rank == "4":
+      elif rank == 4:
          image = games.load_image("4h-pixilart.png", transparent = False)
-      elif rank == "5":
+      elif rank == 5:
          image = games.load_image("5h-pixilart.png", transparent = False) 
-      elif rank == "6":
+      elif rank == 6:
          image = games.load_image("6h-pixilart.png", transparent = False)
-      elif rank == "7":
+      elif rank == 7:
          image = games.load_image("7h-pixilart.png", transparent = False)
-      elif rank == "8":
+      elif rank == 8:
          image = games.load_image("8h-pixilart.png", transparent = False) 
-      elif rank == "9":
+      elif rank == 9 :
          image = games.load_image("9h-pixilart.png", transparent = False)
-      elif rank == "10":
+      elif rank == 10:
          image = games.load_image("10h-pixilart.png", transparent = False) 
-      elif rank == "J":
+      elif rank == 11:
          image = games.load_image("jh-pixilart.png", transparent = False)          
-      elif rank == "Q":
+      elif rank == 12:
          image = games.load_image("qh-pixilart.png", transparent = False) 
-      elif rank == "K":
+      elif rank == 13:
          image = games.load_image("kh-pixilart.png", transparent = False)
+   
+   image = pygame.transform.scale(image, (40, 60))
    print("Returning image")      
    return image
+   
+class Pile(Hand):
+   def determine_value(self):
+      try:
+         len(self.cards) == 0
+      except:
+         self.value = self.cards[len(self.cards)].rank
+         return self.value
+      else:
+         self.value = 0
+         return self.value
+      
 
 def main():
    wall_image = games.load_image(("Cardsbackdrop.jpg"), transparent = False)
    games.screen.background = wall_image
    
-   setup()
+   hand_list = setup()
    
-   mouse = Pointer(image = games.load_image("qs-pixilart.png"), x = games.mouse.x, y = games.mouse.y)
+   mouse = Pointer(image = games.load_image("7s-pixilart.png"), x = games.mouse.x, y = games.mouse.y)
    games.screen.add(mouse)
     
 
-   ###### Im Testing stuff DO NOT USE IN FINISHED GAME########### 
-   cardimage = get_card_image("4", "d")                       
-   cardsprite = Card("4", "d", cardimage, 600, 250, False)                        
-   games.screen.add(cardsprite)
-   cardcard = Card("4", "d", cardimage, 700, 250, False)
-   games.screen.add(cardcard)                  
-   ##############################################################
    games.screen.event_grab = True
    games.mouse.is_visible = False
+   
+   
+   x = 10
+   y = 20
+    for hand in hand_list:
+       for card in hand.cards:
+          cardimage = get_card_image(card.rank, card.suit)                       
+          cardsprite = Card(card.rank, card.suit, cardimage, x, y, False)                        
+          games.screen.add(cardsprite)
+          x += 30
+       x = 10
+       y += 30
+   
+   hand = hand_list[0]
+   for card in hand.cards:
+      cardimage = get_card_image(card.rank, card.suit)                       
+      cardsprite = Card(card.rank, card.suit, cardimage, x, y, False)                        
+      games.screen.add(cardsprite)
+      x += 30
    games.screen.mainloop()
 
 
