@@ -141,7 +141,7 @@ def setup():
    my_deck = Deck()
    my_deck.populate()
    print("\nCompleted Population")
-   my_deck.shuffle()
+   #my_deck.shuffle()
    print("\nCompleted Shuffle\n")
    hand_list = []
    for player in range(no_players):
@@ -285,8 +285,7 @@ def main():
    
    hand_list = setup()
    
-   mouse = Pointer(image = games.load_image("7s-pixilart.png"), x = games.mouse.x, y = games.mouse.y)
-   games.screen.add(mouse)
+   
     
 
    games.screen.event_grab = True
@@ -295,7 +294,7 @@ def main():
    
    x = 10
    y = 20
-    for hand in hand_list:
+   for hand in hand_list:
        for card in hand.cards:
           cardimage = get_card_image(card.rank, card.suit)                       
           cardsprite = Card(card.rank, card.suit, cardimage, x, y, False)                        
@@ -310,6 +309,8 @@ def main():
       cardsprite = Card(card.rank, card.suit, cardimage, x, y, False)                        
       games.screen.add(cardsprite)
       x += 30
+   mouse = Pointer(image = games.load_image("cursor.png", transparent = True), x = games.mouse.x, y = games.mouse.y)
+   games.screen.add(mouse)
    games.screen.mainloop()
 
 
