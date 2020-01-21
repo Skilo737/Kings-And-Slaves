@@ -14,6 +14,8 @@ class Card(games.Sprite):
       self.rank = rank
       self.is_face_up = face_up
       self.image = image
+      self.dropped = 0
+      self.pile = 0
       
 
    
@@ -29,35 +31,43 @@ class Card(games.Sprite):
       return False
    def check_card(self):
       return True
-
+   def check_pile(self):
+      return False
 
    def update(self):
       """ Move to mouse x position """
+      if self.pile == 1:
+         self.x = Pile.x
+         self.y = Pile.y
       if Pointer.hold == 1 and self.held == 1:
          self.x = games.mouse.x
          self.y = games.mouse.y
       for sprite in self.overlapping_sprites:
          if sprite.check():
-            if games.mouse.is_pressed(0) == False and self.held == 1:
+            if games.mouse.is_pressed(0) == False and self.held == 1: #drop
                self.held = 0
                Pointer.change_hold(0) 
-            if games.mouse.is_pressed(0):
+               self.dropped = 1
+            if games.mouse.is_pressed(0): #keep boing held
                if Pointer.hold == 1 and self.held == 1:
                   self.x = games.mouse.x
                   self.y = games.mouse.y    
-               elif Pointer.hold == 0 and self.held == 0:
+               elif Pointer.hold == 0 and self.held == 0: #pick up
                   self.held = 1
                   Pointer.change_hold(1)
                   
                   self.x = games.mouse.x
                   self.y = games.mouse.y
-               
+         elif sprite.check_pile:
+            hand_list[0].give(hand_list.cards[self], Pile)
+            pile = 1 
                
                                       
          if self.left < 0:
             self.left = 0
          if self.right > games.screen.width:
             self.right = games.screen.width
+
 
                   
 class Pointer(games.Sprite):
@@ -80,6 +90,8 @@ class Pointer(games.Sprite):
       return False
    def change_hold(inpt):
       Pointer.hold = inpt
+   def check_pile(self):
+      return False
    
 
 class Hand(object):
@@ -267,16 +279,59 @@ def get_card_image(rank, suit):
    print("Returning image")      
    return image
    
-class Pile(Hand):
-   def determine_value(self):
-      try:
-         len(self.cards) == 0
-      except:
-         self.value = self.cards[len(self.cards)].rank
-         return self.value
-      else:
-         self.value = 0
-         return self.value
+class Pile(games.Sprite):
+  image = games.load_image("pile.png")
+  pile_cards = []
+  overlap = 0
+    
+  def __init__(self, x = 500, y = 350):
+    """ initialize a pizza object """
+    super(Pile, self).__init__(image = games.load_image("pile.png", transparent = False), x = games.screen.width//2, y = games.screen.height//2)
+    
+  def determine_value(self):
+    try:
+      len(pile_cards) == 0
+    except:
+      self.value = self.pile_cards[len(self.pile_cards)].rank
+      return self.value
+    else:          
+      self.value = 0
+      return self.value
+   
+  def update(self):
+     turn = 0
+     print(turn)
+     print(self.pile_cards)
+     if turn == 3:
+        turn = 0
+        current_hand = hand_list[0 + turn]
+        high_cards = []
+     if turn != 0:
+         for i in current_hand.cards:
+           if i.rank > Pile.determine_value:
+             high_cards.append(i)
+             high_cards.sort()
+             current_hand.give(high_cards[0], Pile)
+           elif turn == 0:
+             while Pile.placed != 1:
+               pass
+             turn += 1
+  def placed(self):
+    for card in self.overlapping_sprites:
+      if card.check:
+        if overlap == 0:
+            self.overlap = 1
+        if overlap == 1:
+            self.overlap = 0
+            return 1
+  def check(self):
+   return False
+  def check_card(self):
+   return False
+  def check_pile(self):
+   return True
+    
+     
       
 
 def main():
@@ -284,13 +339,14 @@ def main():
    games.screen.background = wall_image
    
    hand_list = setup()
-   
+   global hand_list
    
     
 
    games.screen.event_grab = True
    games.mouse.is_visible = False
-   
+   the_pile = Pile()
+   games.screen.add(Pile())
    
    x = 10
    y = 20
@@ -309,8 +365,12 @@ def main():
       cardsprite = Card(card.rank, card.suit, cardimage, x, y, False)                        
       games.screen.add(cardsprite)
       x += 30
+   
    mouse = Pointer(image = games.load_image("cursor.png", transparent = True), x = games.mouse.x, y = games.mouse.y)
+
    games.screen.add(mouse)
+   
+   print(Pile.pile_cards)
    games.screen.mainloop()
 
 
