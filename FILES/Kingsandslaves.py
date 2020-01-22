@@ -2,6 +2,7 @@ import pygame
 from livewires import games
 
 games.init(screen_width = 1000, screen_height = 700, fps = 60)
+hand_list = []
 
 class Card(games.Sprite):
    """A playing card, visually represented on the screen """
@@ -58,8 +59,8 @@ class Card(games.Sprite):
                   
                   self.x = games.mouse.x
                   self.y = games.mouse.y
-         elif sprite.check_pile:
-            hand_list[0].give(hand_list.cards[self], Pile)
+         elif sprite.check_pile: 
+            
             pile = 1 
                
                                       
@@ -155,14 +156,10 @@ def setup():
    print("\nCompleted Population")
    #my_deck.shuffle()
    print("\nCompleted Shuffle\n")
-   hand_list = []
    for player in range(no_players):
       hand_list.append(Hand())
    my_deck.deal(hand_list, no_cards)
-   return hand_list
-   # for hand in hand_list:
-   #    print (hand)
-   #    print ()
+   print(hand_list)
       
 def get_card_image(rank, suit):
    print("Getting Image for", rank, suit)
@@ -299,9 +296,8 @@ class Pile(games.Sprite):
       return self.value
    
   def update(self):
+     global hand_list
      turn = 0
-     print(turn)
-     print(self.pile_cards)
      if turn == 3:
         turn = 0
         current_hand = hand_list[0 + turn]
@@ -337,16 +333,12 @@ class Pile(games.Sprite):
 def main():
    wall_image = games.load_image(("Cardsbackdrop.jpg"), transparent = False)
    games.screen.background = wall_image
-   
-   hand_list = setup()
-   global hand_list
-   
-    
-
+   setup()
    games.screen.event_grab = True
    games.mouse.is_visible = False
    the_pile = Pile()
    games.screen.add(Pile())
+   print(hand_list)
    
    x = 10
    y = 20
